@@ -5,27 +5,27 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
-      - echo "🔍 Current working directory:"
+      - echo "🔍 Current directory:"
       - pwd
 
       - echo "📂 Root directory listing:"
       - ls -al
 
-      - echo "📂 Full folder tree:"
+      - echo "📂 Folder tree:"
       - find . -type d
 
-      - echo "📦 Installing frontend dependencies (app-tier)..."
-      - if [ -d "app-tier" ]; then cd app-tier; else echo '❌ app-tier folder not found'; exit 1; fi
+      - echo "📦 Installing backend dependencies (app-tier)..."
+      - if [ -d "app-tier" ]; then cd app-tier; else echo '❌ app-tier (backend) folder not found'; exit 1; fi
       - npm install
 
-      - echo "📦 Installing backend dependencies (web-tier)..."
-      - if [ -d "../web-tier" ]; then cd ../web-tier; elif [ -d "web-tier" ]; then cd web-tier; else echo '❌ web-tier folder not found'; exit 1; fi
+      - echo "📦 Installing frontend dependencies (web-tier)..."
+      - if [ -d "../web-tier" ]; then cd ../web-tier; elif [ -d "web-tier" ]; then cd web-tier; else echo '❌ web-tier (frontend) folder not found'; exit 1; fi
       - npm install
 
   build:
     commands:
-      - echo "⚙️ Building frontend (app-tier)..."
-      - if [ -d "app-tier" ]; then cd app-tier; else echo '❌ app-tier folder not found for build'; exit 1; fi
+      - echo "⚙️ Building frontend (web-tier)..."
+      - if [ -d "../web-tier" ]; then cd ../web-tier; elif [ -d "web-tier" ]; then cd web-tier; else echo '❌ web-tier (frontend) folder not found for build'; exit 1; fi
       - npm run build
       - echo "✅ Build complete."
 
@@ -33,5 +33,5 @@ artifacts:
   files:
     - appspec.yml
     - scripts/*
-    - app-tier/build/**/*
-    - web-tier/**/*
+    - app-tier/**/*
+    - web-tier/build/**/*
