@@ -5,23 +5,25 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
-      - echo Installing frontend dependencies...
-      - cd web-tier
+      - echo "Listing root directory:"
+      - ls -al
+      - echo "Installing frontend dependencies..."
+      - cd application-code/web-tier
       - npm install
+      - echo "Installing backend dependencies..."
       - cd ../backend-tier
-      - echo Installing backend dependencies...
       - npm install
 
   build:
     commands:
-      - echo Building frontend...
+      - echo "Building frontend..."
       - cd ../web-tier
       - npm run build
-      - echo Build complete.
+      - echo "Build complete."
 
 artifacts:
   files:
     - appspec.yml
     - scripts/*
-    - web-tier/build/**/* 
-    - backend-tier/**/*
+    - application-code/web-tier/build/**/* 
+    - application-code/backend-tier/**/*
