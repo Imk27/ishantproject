@@ -14,18 +14,18 @@ phases:
       - echo "📂 Full folder tree:"
       - find . -type d
 
-      - echo "📦 Installing frontend dependencies..."
-      - test -d application-code/web-tier && cd application-code/web-tier || test -d web-tier && cd web-tier || (echo '❌ web-tier folder not found' && exit 1)
+      - echo "📦 Installing frontend dependencies (app-tier)..."
+      - if [ -d "app-tier" ]; then cd app-tier; else echo '❌ app-tier folder not found'; exit 1; fi
       - npm install
 
-      - echo "📦 Installing backend dependencies..."
-      - test -d ../backend-tier && cd ../backend-tier || test -d ../../application-code/backend-tier && cd ../../application-code/backend-tier || test -d backend-tier && cd backend-tier || (echo '❌ backend-tier folder not found' && exit 1)
+      - echo "📦 Installing backend dependencies (web-tier)..."
+      - if [ -d "../web-tier" ]; then cd ../web-tier; elif [ -d "web-tier" ]; then cd web-tier; else echo '❌ web-tier folder not found'; exit 1; fi
       - npm install
 
   build:
     commands:
-      - echo "⚙️ Building frontend..."
-      - test -d ../web-tier && cd ../web-tier || test -d ../../application-code/web-tier && cd ../../application-code/web-tier || test -d web-tier && cd web-tier || (echo '❌ web-tier folder not found for build' && exit 1)
+      - echo "⚙️ Building frontend (app-tier)..."
+      - if [ -d "app-tier" ]; then cd app-tier; else echo '❌ app-tier folder not found for build'; exit 1; fi
       - npm run build
       - echo "✅ Build complete."
 
@@ -33,5 +33,5 @@ artifacts:
   files:
     - appspec.yml
     - scripts/*
-    - application-code/web-tier/build/**/*
-    - application-code/backend-tier/**/*
+    - app-tier/build/**/*
+    - web-tier/**/*
