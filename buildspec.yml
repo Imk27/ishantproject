@@ -6,16 +6,16 @@ phases:
       nodejs: 18
     commands:
       - echo Installing frontend dependencies...
-      - cd application-code/web-tier
+      - cd web-tier
       - npm install
-      - cd ../../application-code/backend-tier
+      - cd ../backend-tier
       - echo Installing backend dependencies...
       - npm install
 
   build:
     commands:
       - echo Building frontend...
-      - cd ../../application-code/web-tier
+      - cd ../web-tier
       - npm run build
       - echo Build complete.
 
@@ -23,5 +23,5 @@ artifacts:
   files:
     - appspec.yml
     - scripts/*
-    - application-code/web-tier/build//*
-    - application-code/backend-tier//*
+    - web-tier/build/**/* 
+    - backend-tier/**/*
