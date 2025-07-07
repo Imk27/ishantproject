@@ -15,45 +15,25 @@ phases:
       - find . -type d
 
       - echo "📦 Installing frontend dependencies..."
-      - |
-        if [ -d "application-code/web-tier" ]; then
-          cd application-code/web-tier
-        elif [ -d "web-tier" ]; then
-          cd web-tier
-        else
-          echo "❌ web-tier folder not found"
-          exit 1
-        fi
+      - if [ -d "application-code/web-tier" ]; then cd application-code/web-tier; \
+        elif [ -d "web-tier" ]; then cd web-tier; \
+        else echo '❌ web-tier folder not found'; exit 1; fi
       - npm install
 
       - echo "📦 Installing backend dependencies..."
-      - |
-        if [ -d "../backend-tier" ]; then
-          cd ../backend-tier
-        elif [ -d "../../application-code/backend-tier" ]; then
-          cd ../../application-code/backend-tier
-        elif [ -d "backend-tier" ]; then
-          cd backend-tier
-        else
-          echo "❌ backend-tier folder not found"
-          exit 1
-        fi
+      - if [ -d "../backend-tier" ]; then cd ../backend-tier; \
+        elif [ -d "../../application-code/backend-tier" ]; then cd ../../application-code/backend-tier; \
+        elif [ -d "backend-tier" ]; then cd backend-tier; \
+        else echo '❌ backend-tier folder not found'; exit 1; fi
       - npm install
 
   build:
     commands:
       - echo "⚙️ Building frontend..."
-      - |
-        if [ -d "../web-tier" ]; then
-          cd ../web-tier
-        elif [ -d "../../application-code/web-tier" ]; then
-          cd ../../application-code/web-tier
-        elif [ -d "web-tier" ]; then
-          cd web-tier
-        else
-          echo "❌ web-tier folder not found for build"
-          exit 1
-        fi
+      - if [ -d "../web-tier" ]; then cd ../web-tier; \
+        elif [ -d "../../application-code/web-tier" ]; then cd ../../application-code/web-tier; \
+        elif [ -d "web-tier" ]; then cd web-tier; \
+        else echo '❌ web-tier folder not found for build'; exit 1; fi
       - npm run build
       - echo "✅ Build complete."
 
