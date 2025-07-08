@@ -11,6 +11,7 @@ files:
   - source: application-code/nginx/custom-nginx.conf
     destination: /etc/nginx/sites-available/react-backend
 
+# Scripts in the root 'scripts/' folder, run during lifecycle events
 hooks:
   BeforeInstall:
     - location: scripts/before_install.sh
