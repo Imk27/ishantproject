@@ -2,16 +2,15 @@ version: 0.0
 os: linux
 
 files:
-  - source: application-code/web-tier/build
+  - source: web-tier/build
     destination: /var/www/react-app
 
-  - source: application-code/backend-tier
+  - source: app-tier
     destination: /var/www/backend-app
 
-  - source: application-code/nginx/custom-nginx.conf
+  - source: nginx.conf
     destination: /etc/nginx/sites-available/react-backend
 
-# Scripts in the root 'scripts/' folder, run during lifecycle events
 hooks:
   BeforeInstall:
     - location: scripts/before_install.sh
