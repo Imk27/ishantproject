@@ -2,29 +2,27 @@ version: 0.0
 os: linux
 
 files:
-  - source: web-tier/build
-    destination: /var/www/react-app
-
-  - source: app-tier
-    destination: /var/www/backend-app
-
-  - source: nginx.conf
-    destination: /etc/nginx/sites-available/react-backend
+  - source: /
+    destination: /home/ec2-user/ishantproject
+    overwrite: true
 
 hooks:
   BeforeInstall:
     - location: scripts/before_install.sh
       timeout: 300
-      runas: root
+      runas: ec2-user
+
   AfterInstall:
     - location: scripts/after_install.sh
       timeout: 300
-      runas: root
+      runas: ec2-user
+
   ApplicationStart:
     - location: scripts/start_server.sh
       timeout: 300
-      runas: root
-  ApplicationStop:
-    - location: scripts/stop_server.sh
+      runas: ec2-user
+
+  ValidateService:
+    - location: scripts/validate_service.sh
       timeout: 300
-      runas: root
+      runas: ec2-user

@@ -1,9 +1,9 @@
 #!/bin/bash
-echo "Running ApplicationStart hook..."
 
-# Start backend (Node.js) app
-cd /var/www/backend-app || exit
-nohup npm start > /var/log/backend.log 2>&1 &
+echo "Starting backend..." 
 
-# Start nginx
-systemctl start nginx
+# Redirect output to a log file - use a location writable by ec2-user, or sudo for /var/log
+echo "Backend started at $(date)" | sudo tee -a /var/log/backend.log
+
+# Start nginx service with sudo
+sudo systemctl start nginx.service
